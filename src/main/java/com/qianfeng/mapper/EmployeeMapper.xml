@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 使用对应的Dao层的接口 -->
+<mapper namespace="com.qianfeng.dao.IEmployeeDao">
+
+	
+	<resultMap type="Employee" id="empMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name" />
+		<result property="age" column="age" />
+		<result property="phone" column="phone" />
+		<result property="sex" column="sex" />
+		
+	</resultMap>
+	
+	<select id="findAll"  resultType="Employee">
+		select * from t_employee
+	</select>
+	<select id="findByName"  parameterType="string" resultType="Employee">
+		select * from t_employee where name=#{name}
+	</select>
+	<select id="findById" parameterType="int" resultType="Employee">
+		select * from t_employee where id=#{id}
+	</select>
+	
+	<insert id="add" parameterType="Employee">
+		insert into t_employee(name,age,phone,sex) values(#{name}, #{age}, #{phone}, #{sex})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from t_employee where id=#{id}
+	</delete>
+	
+	<update id="update" parameterType="Employee">
+		update t_employee set name=#{name},age=#{age},phone=#{phone},sex=#{sex} where id=#{id}
+	</update>
+	
+	<select id="count" resultType="int">
+		select count(1) from t_employee
+	</select>
+	
+	<select id="findByIndexAndSize" parameterType="map" resultType="Employee">
+		select * from t_employee limit #{index},#{size}
+	</select>
+	
+</mapper>
+
+
+
+

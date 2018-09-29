@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 使用对应的Dao层的接口 -->
+<mapper namespace="com.qianfeng.dao.IUserDao">
+
+	<resultMap type="User" id="userMap">
+		<id property="id" column="id"/>
+		<!-- 其他字段的映射关系 -->
+		<result property="name" column="name" />
+		<result property="password" column="password" />
+		<result property="sex" column="sex" />
+		<result property="phone" column="phone" />
+	</resultMap>
+	
+	<select id="findAll" resultType="User">
+	select * from t_user 
+	
+	</select>
+	
+	<select id="findUserById" parameterType="int" resultType="User">
+		select * from t_user where id=#{id}
+	</select>
+	
+	<select id="findUserByName" parameterType="string" resultType="User">
+		select * from t_user where name=#{name}
+	 </select>
+	 
+	 <insert id="addUser" parameterType="User">
+	 	insert into t_user(name,password,sex,phone) values(#{name}, #{password}, #{sex}, #{phone})
+	 </insert>
+	
+	<delete id="deleteUserById" parameterType="int">
+		delete from t_user where id=#{id}
+	</delete>
+	
+	<update id="update" parameterType="Employee">
+		update t_user set name=#{name},password=#{password},sex=#{sex},phone=#{phone} where id=#{id}
+	</update>
+	
+	<update id="change" parameterType="int">
+		
+	</update>
+	
+	<select id="count" resultType="int">
+		select count(1) from t_user
+	</select>
+	
+	<select id="findByIndexAndSize" parameterType="map" resultType="User">
+	select * from t_user where name=#{name} limit #{index},#{size}
+	</select>
+</mapper>
+
+
+
+

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>所有签到信息</title>
+		<style type="text/css">
+			table td {
+				text-align: center;
+			}
+			/*合并表格的边框*/
+			
+			table {
+				width: 700px;
+				border-collapse: collapse;
+			}
+			
+			h3 {
+				text-align: center;
+			}
+			
+			div {
+				margin: 0 auto;
+				width: 700px;
+			}
+		</style>
+		<!-- 引入jquery库 -->
+		<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+		
+	</head>
+
+	<body>
+		<div>
+			<h3>所有签到信息</h3>
+			
+			<table border="1">
+
+				<tr>
+					<th>序号</th>
+					<th>姓名</th>
+					<th>签到状态</th>
+					<th>签到时间</th>
+				</tr>
+				
+				<tbody id="tid">
+				
+				</tbody>
+
+			</table>
+		</div>
+		
+		
+		<script type="text/javascript">
+			$(function(){
+				// 通过ajax请求，获取第一页的数据
+				page_info(1);
+			})
+		
+		</script>
+		
+		<script type="text/javascript">
+			function page_info(page){
+				$.ajax({
+					type:"get",
+					url:"findAllSign",
+					dataType:"json",
+					success:function(data){
+						if(data.code == 1){
+							var infos = data.msg.pageInfos;
+							// 先清除原来的数据
+							$("#tid").empty();
+							$(infos).each(function(){
+								var html = "<tr>";
+								html += "	<td>" + this.id + "</td>";
+								html += "	<td>" + this.uname + "</td>";
+								html += "	<td>" + this.status + "</td>";
+								html += "	<td>" + this.date + "</td>";
+								html += "</tr>";
+							$("#tid").append($(html));
+						}else{
+							alert(data.msg);
+						}
+					}
+				})
+			}
+		
+		</script>
+		
+		
+	</body>
+
+</html>
